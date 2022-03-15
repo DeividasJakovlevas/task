@@ -1,0 +1,1 @@
+[{"name":"meeting","responsiblePerson":"Person","description":"test description","category":"SHORT","type":"LIVE","startDate":1647381600000,"endDate":1647468000000,"peopleInMeeting":["Person"]}]
