@@ -15,9 +15,9 @@ public class Meeting {
     private Date startDate;
     private Date endDate;
     private List<String> peopleInMeeting;
-    public Meeting(){
 
-    }
+    public Meeting(){}
+
     public Meeting(String name, String responsiblePerson, String description, Category category, Type type, Date startDate, Date endDate) {
         this.name = name;
         this.responsiblePerson = responsiblePerson;

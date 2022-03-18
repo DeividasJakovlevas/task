@@ -3,6 +3,7 @@ package com.task.task.meeting;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
@@ -13,10 +14,11 @@ import java.util.List;
 
 @Repository
 public class MeetingRepository {
-    List<Meeting> meetingList = new ArrayList<>();
-    String fileName = "meetings.txt";
+    private List<Meeting> meetingList = new ArrayList<>();
+    ///@Value( "${storage.filename}" )
+    private String fileName = "meetings.txt";
     public MeetingRepository(boolean test){
-        fileName = "meetings_test.txt";
+
     }
     public MeetingRepository() throws IOException {
         File file = new File(fileName);
@@ -28,31 +30,11 @@ public class MeetingRepository {
     }
     public void addMeeting(Meeting meeting){
         meetingList.add(meeting);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String jsonString = objectMapper.writeValueAsString(meetingList);
-            FileWriter fileWriter = new FileWriter(fileName);
-            fileWriter.write(jsonString);
-            fileWriter.close();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveMeetings();
     }
     public void removeMeeting(Meeting meeting){
         meetingList.remove(meeting);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String jsonString = objectMapper.writeValueAsString(meetingList);
-            FileWriter fileWriter = new FileWriter(fileName);
-            fileWriter.write(jsonString);
-            fileWriter.close();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveMeetings();
     }
     public void saveMeetings(){
         ObjectMapper objectMapper = new ObjectMapper();
@@ -61,8 +43,6 @@ public class MeetingRepository {
             FileWriter fileWriter = new FileWriter(fileName);
             fileWriter.write(jsonString);
             fileWriter.close();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

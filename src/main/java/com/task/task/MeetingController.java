@@ -21,21 +21,29 @@ public class MeetingController {
     @RequestMapping("/create_meeting")
     public String createMeeting(HttpServletRequest request, String name, String responsiblePerson, String description, String category, String type,
                                 String startDate, String endDate) throws ParseException {
+
         Category categoryEnum = Category.getByName(category);
+
         if(categoryEnum == null){
             return "Incorrect category.";
         }
+
         Type typeEnum = Type.getByName(type);
+
         if(typeEnum == null){
             return "Incorrect type.";
         }
+
         Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
         Date dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+
         meetingService.createMeeting(name,responsiblePerson,description,categoryEnum,typeEnum,dateStart,dateEnd);
+
         return "Meeting created.";
     }
     @RequestMapping("/delete_meeting")
     public String deleteMeeting(HttpServletRequest request, String meetingName, String responsiblePerson) {
+
         if(meetingService.deleteMeeting(meetingName,responsiblePerson)){
             return "Meeting deleted.";
         }else{
@@ -44,7 +52,9 @@ public class MeetingController {
     }
     @RequestMapping("/add_person")
     public String addPersonToMeeting(HttpServletRequest request, String meetingName, String person) {
+
         AddPersonResult result = meetingService.addPerson(meetingName, person);
+
         if (result.equals(AddPersonResult.ADD_SUCCESSFUL)) {
             return "Person added.";
         }else if (result.equals(AddPersonResult.PERSON_ALREADY_IN_THE_MEETING)) {
@@ -52,11 +62,14 @@ public class MeetingController {
         }else if (result.equals(AddPersonResult.NO_SUCH_MEETING)) {
             return "Meeting with name '"+meetingName+"' does not exist.";
         }
+
         return "";
     }
     @RequestMapping("/remove_person")
     public String removePersonFromMeeting(HttpServletRequest request, String meetingName, String person) {
+
         RemovePersonResult result = meetingService.removePerson(meetingName, person);
+
         if (result.equals(RemovePersonResult.REMOVED_SUCCESSFULLY)) {
             return "Person removed.";
         }else if (result.equals(RemovePersonResult.PERSON_IS_RESPONSIBLE_FOR_MEETING)) {
@@ -70,17 +83,22 @@ public class MeetingController {
     @RequestMapping("/get_all_meetings")
     public String getAllMeetings(HttpServletRequest request, String description, String responsiblePerson,
                                  String category, String type,  String startDate, String endDate, @RequestParam(value = "attendees", defaultValue = "0") int attendees) throws ParseException, JsonProcessingException {
+
         Date dateStart = null;
         Date dateEnd = null;
+
         if(startDate!=null){
             dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
         }
         if(endDate!=null){
             dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
         }
+
        List<Meeting> filteredMeetings  = meetingService.getFilteredMeetings(description, responsiblePerson,
                category, type, dateStart,dateEnd, attendees);
+
         ObjectMapper objectMapper = new ObjectMapper();
+
        return objectMapper.writeValueAsString(filteredMeetings);
     }
 }

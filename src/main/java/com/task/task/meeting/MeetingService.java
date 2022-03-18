@@ -50,8 +50,11 @@ public class MeetingService {
     }
     public RemovePersonResult removePerson(String meetingName, String personName){
         List<Meeting> meetingList = meetingRepository.getAll();
+
         for(Meeting meeting : meetingList){
+
             if(meeting.getName().equals(meetingName)){
+
                 if(meeting.getResponsiblePerson().equals(personName)){
                     return RemovePersonResult.PERSON_IS_RESPONSIBLE_FOR_MEETING;
                 }else{
@@ -72,11 +75,7 @@ public class MeetingService {
 
         List<Meeting> meetingList = meetingRepository.getAll();
         for(Meeting meeting : meetingList){
-//            if(meeting.getName().equals("meeting1")){
-//System.out.println(meeting.getStartDate().toString()+"");
-//System.out.println(meeting.getEndDate().toString());
-//System.out.println("=====================================");
-//            }
+
             if(description != null && !meeting.getDescription().toLowerCase().contains(description.toLowerCase())){
                 continue;
             }
@@ -98,6 +97,7 @@ public class MeetingService {
             if(meeting.getPeopleInMeeting().size() < attendees){
                 continue;
             }
+
             toReturn.add(meeting);
         }
         return toReturn;
