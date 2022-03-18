@@ -3,7 +3,7 @@ package com.task.task.meeting;
 public enum Type {
 
     LIVE("Live"),
-    INPERSON("InPerson");
+    IN_PERSON("InPerson");
     String name;
 
     Type(String name){

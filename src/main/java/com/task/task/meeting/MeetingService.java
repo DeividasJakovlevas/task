@@ -1,6 +1,6 @@
 package com.task.task.meeting;
 
-import org.hibernate.boot.internal.DefaultCustomEntityDirtinessStrategy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,7 @@ public class MeetingService {
         meetingRepository.addMeeting(meeting);
     }
 
-    //returns true if successfully deleted
-    //returns false if can not find the meeting
+
     public boolean deleteMeeting(String name, String responsiblePerson){
         List<Meeting> meetingList = meetingRepository.getAll();
         for(Meeting meeting : meetingList){

@@ -16,8 +16,10 @@ import java.util.List;
 
 @RestController
 public class MeetingController {
+
     @Autowired
     private MeetingService meetingService;
+
     @RequestMapping("/create_meeting")
     public String createMeeting(HttpServletRequest request, String name, String responsiblePerson, String description, String category, String type,
                                 String startDate, String endDate) throws ParseException {
@@ -41,6 +43,7 @@ public class MeetingController {
 
         return "Meeting created.";
     }
+
     @RequestMapping("/delete_meeting")
     public String deleteMeeting(HttpServletRequest request, String meetingName, String responsiblePerson) {
 
@@ -50,6 +53,7 @@ public class MeetingController {
             return "Could not find meeting.";
         }
     }
+
     @RequestMapping("/add_person")
     public String addPersonToMeeting(HttpServletRequest request, String meetingName, String person) {
 
@@ -65,6 +69,7 @@ public class MeetingController {
 
         return "";
     }
+
     @RequestMapping("/remove_person")
     public String removePersonFromMeeting(HttpServletRequest request, String meetingName, String person) {
 
@@ -77,6 +82,7 @@ public class MeetingController {
         }else if (result.equals(RemovePersonResult.NO_SUCH_MEETING)) {
             return "Meeting with name '"+meetingName+"' does not exist.";
         }
+
         return "";
     }
 

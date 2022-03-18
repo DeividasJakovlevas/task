@@ -5,7 +5,7 @@ public enum Category {
     CODE_MONKEY("CodeMonkey"),
     HUB("Hub"),
     SHORT("Short"),
-    TEAMBUILDING("TeamBuilding");
+    TEAM_BUILDING("TeamBuilding");
     String name;
 
     Category(String name){
