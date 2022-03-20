@@ -1,12 +1,10 @@
-package com.task.task;
+package com.task.task.meeting;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.task.task.meeting.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -20,7 +18,13 @@ public class MeetingController {
     @Autowired
     private MeetingService meetingService;
 
-    @RequestMapping("/create_meeting")
+
+    @PostMapping("/test")
+    public String createMeeting1(HttpServletRequest request, String name) {
+
+        return "Meeting created.";
+    }
+    @PostMapping("/v1/meetings")
     public String createMeeting(HttpServletRequest request, String name, String responsiblePerson, String description, String category, String type,
                                 String startDate, String endDate) throws ParseException {
 
@@ -44,7 +48,7 @@ public class MeetingController {
         return "Meeting created.";
     }
 
-    @RequestMapping("/delete_meeting")
+    @DeleteMapping("/v1/meetings")
     public String deleteMeeting(HttpServletRequest request, String meetingName, String responsiblePerson) {
 
         if(meetingService.deleteMeeting(meetingName,responsiblePerson)){
@@ -54,8 +58,8 @@ public class MeetingController {
         }
     }
 
-    @RequestMapping("/add_person")
-    public String addPersonToMeeting(HttpServletRequest request, String meetingName, String person) {
+    @PutMapping("/v1/meetings/{meetingName}/people/{person}")
+    public String addPersonToMeeting(HttpServletRequest request, @PathVariable String meetingName, @PathVariable String person) {
 
         AddPersonResult result = meetingService.addPerson(meetingName, person);
 
@@ -70,8 +74,8 @@ public class MeetingController {
         return "";
     }
 
-    @RequestMapping("/remove_person")
-    public String removePersonFromMeeting(HttpServletRequest request, String meetingName, String person) {
+    @DeleteMapping("/v1/meetings/{meetingName}/people/{person}")
+    public String removePersonFromMeeting(HttpServletRequest request, @PathVariable String meetingName, @PathVariable String person) {
 
         RemovePersonResult result = meetingService.removePerson(meetingName, person);
 
@@ -86,7 +90,7 @@ public class MeetingController {
         return "";
     }
 
-    @RequestMapping("/get_all_meetings")
+    @GetMapping("/v1/meetings")
     public String getAllMeetings(HttpServletRequest request, String description, String responsiblePerson,
                                  String category, String type,  String startDate, String endDate, @RequestParam(value = "attendees", defaultValue = "0") int attendees) throws ParseException, JsonProcessingException {
 

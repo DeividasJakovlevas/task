@@ -1,2 +1,7 @@
-"# meetingTask"
-Simple Java SpringBoot application example as a basic portfolio project.
+# meetingTask</br>
+Simple Java Spring Boot meeting system for portfolio.
+</br>
+Did not use a database.
+##Technologies:
+ - Spring Boot
+
